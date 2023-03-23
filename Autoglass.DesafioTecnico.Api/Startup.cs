@@ -1,3 +1,4 @@
+using Autoglass.DesafioTecnico.Application;
 using Autoglass.DesafioTecnico.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +26,9 @@ namespace Autoglass.DesafioTecnico.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson();
+
             services.ConfigureInfrastructure(Configuration);
+            services.ConfigureApplication();
 
             services.AddSwaggerGen(c =>
             {
