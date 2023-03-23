@@ -1,10 +1,9 @@
 ﻿using Autoglass.DesafioTecnico.Domain.Model;
-using System;
 using System.Linq;
 
 namespace Autoglass.DesafioTecnico.Domain.Core.Repository
 {
-    public interface IRepository<TEntity> 
+    public interface IRepository<TEntity>
         where TEntity : BaseEntity
     {
         IQueryable<TEntity> GetAll();
