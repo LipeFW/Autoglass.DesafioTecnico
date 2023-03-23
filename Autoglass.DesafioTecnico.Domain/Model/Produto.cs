@@ -1,11 +1,9 @@
 ﻿using System;
 
-namespace Autoglass.DesafioTecnico.Domain.Domain
+namespace Autoglass.DesafioTecnico.Domain.Model
 {
-    public class Produto
+    public class Produto : BaseEntity
     {
-        public int Codigo { get; set; }
-        public bool Situacao { get; set; }
         public string Descricao { get; set; }
         public DateTime DataFabricacao { get; set; }
         public DateTime DataValidade { get; set; }
