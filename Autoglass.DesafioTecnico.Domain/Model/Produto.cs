@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Autoglass.DesafioTecnico.Domain.Model
 {
@@ -19,7 +20,7 @@ namespace Autoglass.DesafioTecnico.Domain.Model
             DataValidade = dataValidade;
             CodigoFornecedor = codigoFornecedor;
             DescricaoFornecedor = descricaoFornecedor;
-            CNPJFornecedor = cnpjFornecedor.Replace(".", "").Replace("/", "");
+            CNPJFornecedor = Regex.Replace(cnpjFornecedor, "[^0-9]+", "");
             Situacao = true;
         }
 
