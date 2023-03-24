@@ -15,7 +15,7 @@ namespace Autoglass.DesafioTecnico.Infrastructure.Repository
             _dbContext = context;
         }
 
-        public bool Delete(int codigo)
+        public virtual void Delete(int codigo)
         {
             var fromDb = _dbContext.Set<TEntity>().FirstOrDefault(x => x.Codigo == codigo);
 
@@ -23,27 +23,23 @@ namespace Autoglass.DesafioTecnico.Infrastructure.Repository
             {
                 fromDb.Situacao = false;
                 _dbContext.SaveChanges();
-
-                return true;
             }
-
-            return false;
         }
 
-        public IQueryable<TEntity> GetAll() =>
+        public virtual IQueryable<TEntity> GetAll() =>
             _dbContext.Set<TEntity>().AsNoTracking().Where(x => x.Situacao == true);
 
-        public TEntity GetById(int codigo) =>
+        public virtual TEntity GetById(int codigo) =>
             _dbContext.Set<TEntity>().AsNoTracking().FirstOrDefault(x => x.Codigo == codigo && x.Situacao == true);
 
-        public void Patch(TEntity entity)
+        public virtual void Patch(TEntity entity)
         {
             _dbContext.Update(entity);
 
             _dbContext.SaveChanges();
         }
 
-        public int Post(TEntity entity)
+        public virtual int Post(TEntity entity)
         {
             var dbEntity = _dbContext.Set<TEntity>().Add(entity);
             _dbContext.SaveChanges();

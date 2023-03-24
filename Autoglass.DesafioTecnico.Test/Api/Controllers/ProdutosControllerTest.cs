@@ -17,7 +17,7 @@ namespace Autoglass.DesafioTecnico.Test.Api.Controllers
     {
         private ProdutosController _produtosController;
         private Mock<ProdutoService> _mockProdutoService;
-        private Fixture _fixture = new Fixture();
+        private Fixture _fixture;
 
         [TestInitialize]
         public void Init()
@@ -29,6 +29,8 @@ namespace Autoglass.DesafioTecnico.Test.Api.Controllers
             {
                 HttpContext = new DefaultHttpContext(),
             };
+
+            _fixture = new Fixture();
         }
 
         [TestMethod]
@@ -93,8 +95,6 @@ namespace Autoglass.DesafioTecnico.Test.Api.Controllers
         [TestMethod]
         public void Should_Delete_Return_NoContent()
         {
-            _mockProdutoService.Setup(x => x.Delete(It.IsAny<int>())).Returns(false);
-
             var response = _produtosController.Delete(1);
 
             Assert.AreEqual(response.GetType(), typeof(NoContentResult));

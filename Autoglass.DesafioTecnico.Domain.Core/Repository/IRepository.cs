@@ -10,7 +10,7 @@ namespace Autoglass.DesafioTecnico.Domain.Core.Repository
         TEntity GetById(int codigo);
         int Post(TEntity entity);
         void Patch(TEntity entity);
-        bool Delete(int codigo);
+        void Delete(int codigo);
 
     }
 }
