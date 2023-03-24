@@ -3,6 +3,7 @@ using Autoglass.DesafioTecnico.Domain.Model;
 using Autoglass.DesafioTecnico.Infrastructure.Repository;
 using AutoMapper;
 using System;
+using System.Linq;
 
 namespace Autoglass.DesafioTecnico.Application.Service
 {
@@ -10,6 +11,7 @@ namespace Autoglass.DesafioTecnico.Application.Service
     {
         private ProdutoRepository _produtoRepository;
         private IMapper _produtoMapper;
+        private int _defaultPageRecordCount = 10;
 
         public ProdutoService(ProdutoRepository produtoRepository, IMapper produtoMapper)
         {
@@ -37,6 +39,15 @@ namespace Autoglass.DesafioTecnico.Application.Service
             {
                 response.Data.Add(_produtoMapper.Map<ProdutoResponseModel>(item));
             }
+
+            return response;
+        }
+
+        public virtual ProdutoResponseModel GetById(int codigo)
+        {
+            var fromDb = _produtoRepository.GetById(codigo);
+
+            var response = _produtoMapper.Map<ProdutoResponseModel>(fromDb);
 
             return response;
         }

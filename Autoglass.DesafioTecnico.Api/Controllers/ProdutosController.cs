@@ -45,8 +45,6 @@ namespace Autoglass.DesafioTecnico.Api.Controllers
 
                 return Created($"api/produtos/{response.ToString()}", null);
 
-                return Created("", null);
-
             }
             catch (ArgumentException ex)
             {
@@ -54,6 +52,7 @@ namespace Autoglass.DesafioTecnico.Api.Controllers
 
             }
         }
+
         /// <summary>
         /// Lista todos os produtos cadastrados.
         /// </summary>
@@ -67,5 +66,28 @@ namespace Autoglass.DesafioTecnico.Api.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Busca um produto com um código específico.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     GET api/Produtos/1
+        ///
+        /// </remarks>
+        /// <param name="id">   O Código do produto a ser pesquisado</param>
+        /// <returns>Um produto em específico</returns>
+        /// <response code="200">Retorna OK caso exista um produto com o código informado.</response>
+        /// <response code="404">Retorna NOT FOUND caso não exista nenhum produto com o código informado.</response>
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var response = _produtoService.GetById(id);
+
+            if (response == null)
+                return NotFound();
+
+            return Ok(response);
+        }
     }
 }
