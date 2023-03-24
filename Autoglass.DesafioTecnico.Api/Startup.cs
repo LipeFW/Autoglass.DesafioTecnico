@@ -33,7 +33,7 @@ namespace Autoglass.DesafioTecnico.Api
             services.AddSwaggerGen(c =>
             {
                 c.EnableAnnotations();
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Desafio", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Autoglass.Desafio", Version = "v1" });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
