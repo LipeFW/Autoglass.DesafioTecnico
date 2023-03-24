@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Autoglass.DesafioTecnico.Application.Service
 {
@@ -60,9 +61,14 @@ namespace Autoglass.DesafioTecnico.Application.Service
         {
             var fromDb = _produtoRepository.GetById(id);
 
-            produto.ApplyTo(fromDb);
+            if (fromDb != null)
+            {
+                produto.ApplyTo(fromDb);
 
-            _produtoRepository.Patch(fromDb);
+                _produtoRepository.Patch(fromDb);
+            }
+
+
         }
 
         public virtual int Post(ProdutoRequestModel request)
@@ -73,6 +79,7 @@ namespace Autoglass.DesafioTecnico.Application.Service
             if (string.IsNullOrWhiteSpace(request.Descricao))
                 throw new ArgumentException("O Campo Descrição deve ser preenchido!");
 
+            request.CNPJFornecedor = Regex.Replace(request.CNPJFornecedor, "[^0-9]+", "");
 
             return _produtoRepository.Post(_produtoMapper.Map<Produto>(request));
 
