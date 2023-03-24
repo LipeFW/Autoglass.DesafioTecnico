@@ -2,6 +2,7 @@
 using Autoglass.DesafioTecnico.Domain.Model;
 using Autoglass.DesafioTecnico.Infrastructure.Repository;
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Linq;
 
@@ -55,10 +56,23 @@ namespace Autoglass.DesafioTecnico.Application.Service
             return response;
         }
 
+        public virtual void Patch(int id, JsonPatchDocument<Produto> produto)
+        {
+            var fromDb = _produtoRepository.GetById(id);
+
+            produto.ApplyTo(fromDb);
+
+            _produtoRepository.Patch(fromDb);
+        }
+
         public virtual int Post(ProdutoRequestModel request)
         {
             if (request.DataValidade <= request.DataFabricacao)
                 throw new ArgumentException("A Data de Validade não pode ser menor que a de Data de Fabricação!");
+
+            if (string.IsNullOrWhiteSpace(request.Descricao))
+                throw new ArgumentException("O Campo Descrição deve ser preenchido!");
+
 
             return _produtoRepository.Post(_produtoMapper.Map<Produto>(request));
 

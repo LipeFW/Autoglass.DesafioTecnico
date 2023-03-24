@@ -1,5 +1,7 @@
 ﻿using Autoglass.DesafioTecnico.Application.Dto;
 using Autoglass.DesafioTecnico.Application.Service;
+using Autoglass.DesafioTecnico.Domain.Model;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -43,7 +45,7 @@ namespace Autoglass.DesafioTecnico.Api.Controllers
             {
                 var response = _produtoService.Post(request);
 
-                return Created($"api/produtos/{response.ToString()}", null);
+                return Created($"api/produtos/{response}", null);
 
             }
             catch (ArgumentException ex)
@@ -107,6 +109,42 @@ namespace Autoglass.DesafioTecnico.Api.Controllers
             _produtoService.Delete(id);
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Atualiza as informações de um produto específico.
+        /// </summary>
+        /// <remarks>
+        ///
+        /// </remarks>
+        /// <param name="id">   Id do produto a ser atualizado.</param>
+        /// <param name="patchDoc">   Corpo com as informações do produto a serem atualizadas.
+        /// Exemplo:
+        ///  
+        ///PATCH api/produtos/1
+        /// 
+        ///     [
+        ///         {
+        ///             "path": "/descricao",
+        ///             "op": "replace",
+        ///             "value": "Nova descricao do produto"
+        ///         }
+        ///     ]
+        ///
+        /// </param>
+        /// <response code="200">Retorna OK se as informações forem atualizadas com sucesso.</response>
+        /// <response code="400">Retorna BAD REQUEST se houver algum problma durante a atualização dos dados.</response>
+        [HttpPatch("{id}")]
+        public IActionResult Patch(int id, [FromBody] JsonPatchDocument<Produto> patchDoc)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _produtoService.Patch(id, patchDoc);
+
+            return Ok();
         }
     }
 }
