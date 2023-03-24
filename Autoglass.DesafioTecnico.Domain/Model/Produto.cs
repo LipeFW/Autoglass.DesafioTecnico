@@ -19,7 +19,7 @@ namespace Autoglass.DesafioTecnico.Domain.Model
             DataValidade = dataValidade;
             CodigoFornecedor = codigoFornecedor;
             DescricaoFornecedor = descricaoFornecedor;
-            CNPJFornecedor = cnpjFornecedor;
+            CNPJFornecedor = cnpjFornecedor.Replace(".", "").Replace("/", "");
             Situacao = true;
         }
 
