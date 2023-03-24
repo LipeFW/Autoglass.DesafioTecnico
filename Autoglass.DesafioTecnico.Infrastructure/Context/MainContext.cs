@@ -20,7 +20,11 @@ namespace Autoglass.DesafioTecnico.Infrastructure.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer("DefaultConnection");
+            {
+                optionsBuilder
+                    .UseLazyLoadingProxies()
+                    .UseSqlServer("DefaultConnection");
+            }
         }
 
     }
