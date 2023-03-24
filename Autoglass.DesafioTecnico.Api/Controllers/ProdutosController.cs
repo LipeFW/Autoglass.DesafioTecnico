@@ -54,5 +54,18 @@ namespace Autoglass.DesafioTecnico.Api.Controllers
 
             }
         }
+        /// <summary>
+        /// Lista todos os produtos cadastrados.
+        /// </summary>
+        /// <returns>Os produtos cadastrados</returns>
+        /// <response code="200">Retorna os produtos cadastrados na base de dados.</response>
+        [HttpGet]
+        public IActionResult GetAll([FromQuery] GetAllProdutoRequestModel request)
+        {
+            var response = _produtoService.GetAll(request);
+
+            return Ok(response);
+        }
+
     }
 }

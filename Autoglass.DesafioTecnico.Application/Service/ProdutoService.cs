@@ -17,6 +17,30 @@ namespace Autoglass.DesafioTecnico.Application.Service
             _produtoMapper = produtoMapper;
         }
 
+        public virtual GetAllProdutoResponseModel GetAll(GetAllProdutoRequestModel request)
+        {
+            var takePage = request.Page ?? 1;
+            var takeCount = request.CountPerPage ?? _defaultPageRecordCount;
+
+            var totalFromDb = _produtoRepository.GetAll().Where(x =>
+                (x.CodigoFornecedor == request.CodigoFornecedor || request.CodigoFornecedor == 0) &&
+                (x.CNPJFornecedor == request.CNPJFornecedor || request.CNPJFornecedor == null)
+            );
+
+            var response = new GetAllProdutoResponseModel(takePage, totalFromDb.Count());
+
+            var paginated = totalFromDb.Skip((takePage - 1) * takeCount)
+                .Take(takeCount)
+                .ToList();
+
+            foreach (var item in paginated)
+            {
+                response.Data.Add(_produtoMapper.Map<ProdutoResponseModel>(item));
+            }
+
+            return response;
+        }
+
         public virtual int Post(ProdutoRequestModel request)
         {
             if (request.DataValidade <= request.DataFabricacao)
