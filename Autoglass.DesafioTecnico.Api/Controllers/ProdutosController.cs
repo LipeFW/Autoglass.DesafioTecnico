@@ -43,7 +43,7 @@ namespace Autoglass.DesafioTecnico.Api.Controllers
             {
                 var response = _produtoService.Post(request);
 
-                Response.Headers.Add("Location", response.ToString());
+                return Created($"api/produtos/{response.ToString()}", null);
 
                 return Created("", null);
 
