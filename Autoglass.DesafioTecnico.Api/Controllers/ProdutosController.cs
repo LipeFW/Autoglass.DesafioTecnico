@@ -89,5 +89,24 @@ namespace Autoglass.DesafioTecnico.Api.Controllers
 
             return Ok(response);
         }
+
+        /// <summary>
+        /// Desativa o cadastro de um produto específico.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     DELETE api/produtos/1
+        ///
+        /// </remarks>
+        /// <param name="id">   Id do produto a ser desativado.</param>
+        /// <response code="204">Retorna NO CONTENT.</response>
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _produtoService.Delete(id);
+
+            return NoContent();
+        }
     }
 }

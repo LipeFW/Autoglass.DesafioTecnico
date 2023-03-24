@@ -19,6 +19,9 @@ namespace Autoglass.DesafioTecnico.Application.Service
             _produtoMapper = produtoMapper;
         }
 
+        public virtual bool Delete(int id) =>
+            _produtoRepository.Delete(id);
+
         public virtual GetAllProdutoResponseModel GetAll(GetAllProdutoRequestModel request)
         {
             var takePage = request.Page ?? 1;
